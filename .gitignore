@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+# VisualStudio files
+*.pdb
+*.vcxproj.user
+
+# VisualStudio directories
+Debug
+Release
+.vs
+
+# VSCode directories
+*.vscode
