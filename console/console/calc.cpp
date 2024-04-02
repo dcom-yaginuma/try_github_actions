@@ -22,3 +22,7 @@ int calc::minus(int value) {
 int calc::multiple(int value) {
     return (this->value *= value);
 }
+
+int calc::division(int value){
+    return (this->value /= value);
+}
