@@ -16,7 +16,7 @@ int calc::add(int value) {
 }
 
 int calc::minus(int value) {
-    return (this->value -=value);
+    return (this->value -= value);
 }
 
 int calc::multiple(int value) {
