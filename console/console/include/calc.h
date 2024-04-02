@@ -8,6 +8,7 @@ public:
 
     int add(int value);
     int minus(int value);
+    int multiple(int value);
 
 private:
     int value;
