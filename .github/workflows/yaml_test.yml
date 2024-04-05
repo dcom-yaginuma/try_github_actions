@@ -5,6 +5,16 @@ name: trigger actions test
 # ここではプッシュしたタイミングとブランチ名を指定
 on:
   workflow_dispatch:
+    inputs:
+      input_1:
+        description: "input 1"
+        default: 'Install dependencies'
+        required: true
+        type: string
+      input_2:
+        description: "input 2"
+        required: false
+        type: string
 
 # ワークフローはJob(ジョブ)単位で分けられる
 #   ジョブは処理の最上位単位です
