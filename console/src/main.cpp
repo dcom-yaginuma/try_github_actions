@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "include/calc.h"
+#include "../include/calc.h"
 
 // https://ryokrm-m.com/tech/cpplint%E3%81%AE%E3%83%AB%E3%83%BC%E3%83%AB%E4%B8%80%E8%A6%A7/
 int main() {

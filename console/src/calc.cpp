@@ -1,15 +1,13 @@
-#include "include/calc.h"
+#include "../include/calc.h"
 
-calc::calc()
-    : value(0)
-{}
+calc::calc() : value(0) {
+}
 
-calc::calc(int value)
-    : value(value)
-{}
+calc::calc(int value) : value(value) {
+}
 
-calc::~calc()
-{}
+calc::~calc() {
+}
 
 int calc::add(int value) {
     return (this->value += value);
@@ -23,6 +21,6 @@ int calc::multiple(int value) {
     return (this->value *= value);
 }
 
-int calc::division(int value){
+int calc::division(int value) {
     return (this->value /= value);
 }
