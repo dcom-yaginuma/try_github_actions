@@ -63,11 +63,3 @@ jobs:
       id: lint
       run: |
         find . -name *.c -o -name *.cc -o -name *.cpp -o -name *.h -o -name *.hh -o -name *.hpp | xargs clang-format -i -Werror -style=file --dry-run --verbose
-
-    # 前段のLint実行がfailしていたら実行結果をGitHubに保存
-    - name: Lint results
-      if: failure() && steps.lint.conclusion == 'failure'
-      uses: actions/upload-artifact@v3
-      with:
-        name: clang-format results
-        path: ./clang-format_results.txt
