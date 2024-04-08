@@ -1,5 +1,5 @@
 # ワークフローの名前
-name: on push clang format
+name: clang format
 
 # ワークフローをトリガーするイベントを設定
 # ここではプッシュしたタイミングとブランチ名を指定
@@ -57,13 +57,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install clang-format
 
-    # Lint実行
+    # clang-format実行
     # 後段のstepで利用するかもなのでリダイレクト演算子(>)で実行結果を保存
     - name: Lint with clang-format
       id: lint
       run: |
-        ls -la
-        pwd
+        find . -name *.c -o -name *.cc -o -name *.cpp -o -name *.h -o -name *.hh -o -name *.hpp | xargs clang-format -i -Werror -style=file --dry-run --verbose
 
     # 前段のLint実行がfailしていたら実行結果をGitHubに保存
     - name: Lint results
