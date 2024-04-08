@@ -17,7 +17,7 @@ on:
 jobs:
 
   # ジョブの名前(id)
-  job-1:
+  job-clang-format:
 
     # ジョブを実行するOS(ランナー)を指定
     runs-on: ubuntu-20.04
@@ -58,7 +58,6 @@ jobs:
         pip install clang-format
 
     # clang-format実行
-    # 後段のstepで利用するかもなのでリダイレクト演算子(>)で実行結果を保存
     - name: Lint with clang-format
       id: lint
       run: |
