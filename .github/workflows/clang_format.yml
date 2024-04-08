@@ -1,0 +1,73 @@
+# ワークフローの名前
+name: on push clang format
+
+# ワークフローをトリガーするイベントを設定
+# ここではプッシュしたタイミングとブランチ名を指定
+on:
+  push:
+    branches:
+      - 'main'
+      - 'dev'
+      - 'feature/*'
+
+# ワークフローはJob(ジョブ)単位で分けられる
+#   ジョブは処理の最上位単位です
+#   ジョブは単数でも複数でもOK(ここでは単数)
+#   ジョブは並列で実行される
+jobs:
+
+  # ジョブの名前(id)
+  job-1:
+
+    # ジョブを実行するOS(ランナー)を指定
+    runs-on: ubuntu-20.04
+
+    # タイムアウトを設定
+    # optional、ワークフローが無限ループしたさいなどのばかよけ
+    timeout-minutes: 3
+
+    # steps と呼ばれる一連のタスクで上から直列で実行されます
+    # ここではnameで区切ってusesやrunでタスクの処理を行います
+    #   name  : GitHub UIで表示されるステップの名前
+    #   id    : ステップの一意の識別子。nameだと識別できない
+    #   uses  : 第三者もしくはGitHubが作成したActions
+    #           要は外部クラスやライブラリのメソッドみたいなもので一連の処理をまとめて実行する
+    #   with  : 上記のusesに渡す入力パラメーターの map。key/valueで定義する
+    #   run   : OS(runs-onで指定)のシェルを使用してコマンドラインを実行
+    #           各ステップごとに新しいシェルが起動される。（windows上で複数のコマンドプロンプトを開くイメージ）
+    #           異なるシェルで変数などの情報は共有されないので注意
+    #   if    : 条件が満たされなければ、ステップを実行しないようにすることができる
+    steps:
+
+    # GitHub Actionsがプッシュされたコードをチェックアウトする
+    # devブランチならdevのコード、feature/aならfeature/aのコード
+    - name: checkout
+      uses: actions/checkout@v3
+
+    # python環境構築
+    # パラメータ(with)でバージョン指定
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    # Lintで利用するclang-formatインストール
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install clang-format
+
+    # Lint実行
+    # 後段のstepで利用するかもなのでリダイレクト演算子(>)で実行結果を保存
+    - name: Lint with clang-format
+      id: lint
+      run: |
+        ./clang-format.sh
+
+    # 前段のLint実行がfailしていたら実行結果をGitHubに保存
+    - name: Lint results
+      if: failure() && steps.lint.conclusion == 'failure'
+      uses: actions/upload-artifact@v3
+      with:
+        name: clang-format results
+        path: ./clang-format_results.txt
