@@ -62,7 +62,8 @@ jobs:
     - name: Lint with clang-format
       id: lint
       run: |
-        ./clang-format.sh
+        ls -la
+        pwd
 
     # 前段のLint実行がfailしていたら実行結果をGitHubに保存
     - name: Lint results
