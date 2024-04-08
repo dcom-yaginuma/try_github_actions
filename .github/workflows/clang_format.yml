@@ -1,5 +1,5 @@
 # ワークフローの名前
-name: on push clang format
+name: clang format
 
 # ワークフローをトリガーするイベントを設定
 # ここではプッシュしたタイミングとブランチ名を指定
@@ -17,7 +17,7 @@ on:
 jobs:
 
   # ジョブの名前(id)
-  job-1:
+  job-clang-format:
 
     # ジョブを実行するOS(ランナー)を指定
     runs-on: ubuntu-20.04
@@ -57,17 +57,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install clang-format
 
-    # Lint実行
-    # 後段のstepで利用するかもなのでリダイレクト演算子(>)で実行結果を保存
+    # clang-format実行
     - name: Lint with clang-format
       id: lint
       run: |
-        ./clang-format.sh
-
-    # 前段のLint実行がfailしていたら実行結果をGitHubに保存
-    - name: Lint results
-      if: failure() && steps.lint.conclusion == 'failure'
-      uses: actions/upload-artifact@v3
-      with:
-        name: clang-format results
-        path: ./clang-format_results.txt
+        find . -name *.c -o -name *.cc -o -name *.cpp -o -name *.h -o -name *.hh -o -name *.hpp | xargs clang-format -i -Werror -style=file --dry-run --verbose

@@ -1,7 +1,7 @@
 #pragma once
 
 class calc {
-  public:
+   public:
     calc();
     explicit calc(int value);
     virtual ~calc();
@@ -11,6 +11,6 @@ class calc {
     int multiple(int value);
     int division(int value);
 
-  private:
+   private:
     int value;
 };
