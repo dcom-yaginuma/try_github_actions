@@ -1,0 +1,1 @@
+python .\run-clang-format.py -r .
