@@ -13,3 +13,5 @@ github actionsの動作確認用リポジトリ
 
 2. Push時にGitHub Actionsによってコードのチェックが行われる
    - コーディングルールに沿わないコードがあればAction実行結果がErrorとなる
+   - <img width="698" alt="image" src="https://github.com/dcom-yaginuma/try_github_actions/assets/7627846/c2471217-e41e-4112-bd61-c7971e16b7fe">
+
